@@ -1,0 +1,5 @@
+/* Styles for HTML editor */
+.tagged-word {
+    background-color: #BB86FC;
+    cursor: pointer;
+}

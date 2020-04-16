@@ -1,0 +1,117 @@
+/* Global Styles */
+html, body {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Styles */
+.header {
+    height: 170px;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+}
+
+.title span {
+    font-size: 36px;
+    color: gray;
+}
+
+.header-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.sentiment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sentiment span { font-size: 16px; }
+
+/* Content Area Styles */
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: stretch;
+    height: 75vh;
+}
+
+.content > div {
+    width: 45vw;
+}
+
+.essayist-card-title {
+    color: gray;
+    text-align: center;
+}
+
+.content .essayist-card {
+    margin: 10px 0;
+}
+
+.sentiment-radio label {
+    display: block;
+    margin: 5px;
+}
+
+.analysis-placeholder {
+    height: 44.5vh;
+    display: flex;
+}
+
+#gauge {
+    width:250px; 
+    height:150px;
+}
+
+.overall-sentiment {
+    display: flex;
+    flex-direction: row;
+}
+
+.sentiment-text {
+    margin: auto;
+    font-size: 18px;
+    padding: 5px;
+}
+
+.overall-sentiment-value {
+    font-weight: bold;
+}
+
+.overall-sentiment-value.positive { color: #a9d70b; }
+.overall-sentiment-value.neutral { color: #f9c802; }
+.overall-sentiment-value.negative { color: #ff0000; }
+
+.editor {
+    margin: 10px;
+}
+
+/* Antonym Area Styles */
+#antonymContainer {
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; 
+}
+
+.antonym-hint {
+    text-align: center;
+    font-weight: 500;
+}
+
+.antonym {
+    margin: 5px 50px;
+    text-align: center;
+    background: rgba(0, 151, 19, 0.3);
+    cursor: pointer;
+}
+
