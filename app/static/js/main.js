@@ -19,7 +19,7 @@ tinymce.init({
     editor.on('init', function(e) {
       // Append our stylesheet to iframe
         const cssLink = document.createElement("link");
-        cssLink.href = "../css/editor.css"; 
+        cssLink.href = "../static/css/editor.css"; 
         cssLink.rel = "stylesheet"; 
         cssLink.type = "text/css"; 
         document.getElementById('editor_ifr').contentDocument.head.appendChild(cssLink);
