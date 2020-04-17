@@ -6,7 +6,7 @@ from requests import get
 from flask_restful import Resource
 from flask import request,jsonify
 from nltk.tokenize import word_tokenize
-from nltk.tokenize.treebank import TreebankWordDetokenizer
+from sacremoses import MosesDetokenizer
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 class Essayist(Resource):
@@ -33,7 +33,7 @@ class Essayist(Resource):
         analyzer = SentimentIntensityAnalyzer()
 
         # Set a reference to the detokenizer
-        detokenizer = TreebankWordDetokenizer()
+        detokenizer = MosesDetokenizer(lang='en')
 
         # Declare analysis dictionary
         analysis = {
