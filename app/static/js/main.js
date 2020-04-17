@@ -44,7 +44,7 @@ function onFetchAnalysis() {
     });
     
     // Make the essay analysis
-    $.post('http://localhost:5000/get_essay_analysis', { essay_text: essayText, desired_sentiment: desiredSentiment })
+    $.post('https://essayist-csuf.herokuapp.com/get_essay_analysis', { essay_text: essayText, desired_sentiment: desiredSentiment })
     .done(result => parseAnalysis(result))
     .fail(err => {
         console.log('error =', err.status);
