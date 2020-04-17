@@ -1,0 +1,7 @@
+[2020-04-16 19:17:25 -0700] [1394] [INFO] Starting gunicorn 20.0.4
+[2020-04-16 19:17:25 -0700] [1394] [INFO] Listening at: http://127.0.0.1:8000 (1394)
+[2020-04-16 19:17:25 -0700] [1394] [INFO] Using worker: sync
+[2020-04-16 19:17:25 -0700] [1396] [INFO] Booting worker with pid: 1396
+[2020-04-16 19:17:34 -0700] [1394] [INFO] Handling signal: int
+[2020-04-16 19:17:34 -0700] [1396] [INFO] Worker exiting (pid: 1396)
+[2020-04-16 19:17:34 -0700] [1394] [INFO] Shutting down: Master

@@ -8,16 +8,16 @@ import nltk
 nltk.download('treebank')
 nltk.download('punkt')
 
-app = Flask(__name__)
-CORS(app)
+application = Flask(__name__)
+CORS(application)
 
-api = Api(app)
+api = Api(application)
 
-@app.route("/")
+@application.route("/")
 def start():
     return render_template("index.html")
 
 api.add_resource(Essayist, '/get_essay_analysis')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    application.run(host='0.0.0.0')
