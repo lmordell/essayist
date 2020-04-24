@@ -96,22 +96,30 @@ html, body {
 }
 
 /* Antonym Area Styles */
-#antonymContainer {
+#alternativesContainer {
     height: 30vh;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap; 
 }
 
-.antonym-hint {
+.alternatives-hint {
     text-align: center;
     font-weight: 500;
 }
 
-.antonym {
+.alternate {
     margin: 5px 50px;
     text-align: center;
     background: rgba(0, 151, 19, 0.3);
     cursor: pointer;
+}
+
+.opposite-tone-word {
+    background-color: #BB86FC;
+}
+
+.match-tone-word {
+    background-color: lightgreen;
 }
 

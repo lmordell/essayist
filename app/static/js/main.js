@@ -4,9 +4,10 @@
 // Declare a reference to the overall score guage
 let overallScoreGauge;
 
-// Declare a reference to the word - antonym map
-// e.g. { 'love': ['hate', 'despise', ...] }
-let wordAntonymMap = {};
+// Declare a reference to the word - alternate map
+// e.g. { 'love': ['hate', 'despise', ...] } for antonyms
+// e.g. { 'love': ['like', 'enjoy', ...] } for synonyms
+let wordAlternatemMap = {};
 
 // Instantiate the Rich Text editor
 tinymce.init({
@@ -62,13 +63,13 @@ function parseAnalysis(analysis) {
     updateOverallAnalysis(overall_score);
 
     // 
-    wordAntonymMap = analysis.tagged_words;
+    wordAlternatemMap = analysis.tagged_words;
 
     // Set the text in the editor
     tinyMCE.activeEditor.setContent(analysis.text);
 
     // Show the antonym hint
-    $('#antonymHint').attr('hidden', false);
+    $('#alternatesHint').attr('hidden', false);
 }
 
 /** Update the overall analysis guage and sentiment text */
@@ -117,37 +118,44 @@ function updateOverallAnalysis(score) {
  */
 function addTaggedWordListener(editor) {
     const doc         = editor.target.iframeElement.contentDocument;
-    const taggedWords = doc.getElementsByClassName('tagged-word');
+    const taggedWords = doc.querySelectorAll(['.opposite-tone-word', '.match-tone-word']);
 
     for(let i = 0; i < taggedWords.length; i++) {
         taggedWords[i].addEventListener("click", function(evt) {
-            updateAntonymContainer(evt);
+            updateAlternativesContainer(evt);
         });
     }
 }
 
 /** Append the clicked word's antonyms to the antonym container */
-function updateAntonymContainer(evt) {
-    const word      = evt.target.innerText;
-    const antonyms  = wordAntonymMap[word];
-    const antonymCt = $('#antonymContainer');
+function updateAlternativesContainer(evt) {
+    const word         = evt.target.innerText;
+    const alternates   = wordAlternatemMap[word];
+    const alternatesCt = $('#alternativesContainer');
 
-    // Clear current antonyms
-    antonymCt.empty();
+    // Clear current alternates
+    alternatesCt.empty();
 
-    // Show the antonym hint
-    $('#antonymHint').attr('hidden', false);
-
-    // Append each antonym to the antonym container
-    for (antonym of antonyms) {
-        antonymCt.append(`<div class="antonym">${antonym}</div>`);
+    // Indicate that we're displaying a list of synonyms
+    if (evt.target.classList.value === 'match-tone-word') {
+        $('#alternativeTitle').text('Synonyms');
+    } else {
+        $('#alternativeTitle').text('Antonyms');
     }
 
-    const antonymEls = document.getElementsByClassName('antonym');
+    // Show the alternates hint
+    $('#alternatesHint').attr('hidden', false);
 
-    for(let i = 0; i < antonymEls.length; i++) {
-        antonymEls[i].addEventListener("click", function(antonymEvt) {
-            replaceText(antonymEvt, evt);
+    // Append each alternate to the alternate container
+    for (alternate of alternates) {
+        alternatesCt.append(`<div class="alternate">${alternate}</div>`);
+    }
+
+    const alternateEls = document.getElementsByClassName('alternate');
+
+    for(let i = 0; i < alternateEls.length; i++) {
+        alternateEls[i].addEventListener("click", function(alternateEvt) {
+            replaceText(alternateEvt, evt);
         });
     }
 }
@@ -156,8 +164,8 @@ function updateAntonymContainer(evt) {
  * Handler for clicking an antonym. On click, replace the tagged word in the editor
  * with the antonym.
  */
-function replaceText(antonymEvt, originalTextEvt) {
-    const antonym = antonymEvt.target.innerText;
+function replaceText(alternateEvt, originalTextEvt) {
+    const antonym = alternateEvt.target.innerText;
     const wordEl  = originalTextEvt.target;
 
     // Remove the highlight from the word
@@ -171,14 +179,16 @@ function replaceText(antonymEvt, originalTextEvt) {
 function reset() {
     const sentimentText = $('.sentiment-text');
     const sentimentEl   = $('.overall-sentiment-value');
-    const antonymCt     = $('#antonymContainer');
+    const alternatesCt  = $('#alternativesContainer');
 
     sentimentText.attr('hidden', true);
 
-    // Hide the antonym hint
-    $('#antonymHint').attr('hidden', false);
+    $('#alternativeTitle').text('Alternatives');
 
-    antonymCt.empty();
+    // Hide the antonym hint
+    $('#alternatesHint').attr('hidden', false);
+
+    alternatesCt.empty();
 
     sentimentEl.removeClass(['positive', 'neutral', 'negative']);
     sentimentEl.text('');

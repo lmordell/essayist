@@ -53,18 +53,28 @@ class Essayist(Resource):
             # Tokenize the sentence
             tokenized_sentence = word_tokenize(sentence)
 
-            # Find words that do not match desired sentiment. e.g.
-            # Desired sentiment = 'positive', tag words like 'terrible' or 'awful'
-            # Desired sentiment = 'negative', tag words like 'great', 'wonderful'
             for word_idx, word in enumerate(tokenized_sentence):
                 compound_score = analyzer.polarity_scores(word)['compound']
 
+                # Find words that do not match desired sentiment. e.g.
+                # Desired sentiment = 'positive', tag words like 'terrible' or 'awful'
+                # Desired sentiment = 'negative', tag words like 'great', 'wonderful'
                 if (desired_sentiment == 'positive' and compound_score <= -0.1) or (desired_sentiment == 'negative' and compound_score >= 0.1):
                     antonymns = self.get_antonyms(word)
 
                     analysis['tagged_words'][word] = antonymns
 
-                    tokenized_sentence[word_idx] = f'<span class="tagged-word">{word}</span>' 
+                    tokenized_sentence[word_idx] = f'<span class="opposite-tone-word">{word}</span>'
+
+                # Find words that do match desired sentiment. e.g.
+                # Desired sentiment = 'positive', tag words like 'happy' or 'great'
+                # Desired sentiment = 'negative', tag words like 'sad', 'awful'
+                if (desired_sentiment == 'positive' and compound_score >= 0.1) or (desired_sentiment == 'negative' and compound_score <= -0.1):
+                    synonyms = self.get_synonyms(word)
+
+                    analysis['tagged_words'][word] = synonyms
+
+                    tokenized_sentence[word_idx] = f'<span class="match-tone-word">{word}</span>'
 
             # Detokentize the sentence and replace it since it now contains tagged words
             sentences[sentence_idx] = detokenizer.detokenize(tokenized_sentence)
@@ -96,6 +106,20 @@ class Essayist(Resource):
 
         return flattened_antonyms
 
+    def get_synonyms(self, word):
+        '''
+        Get the antonyms for a given word from the Merriam-Webster Thesaurus API
+        and add them to the analysis
+        '''
+        url  = f'{merriam_webster.BASE_URL}/{word}?key={merriam_webster.APP_KEY}'
+        json = get(url).json()
+
+        # Get the antonyms from the returned json
+        synonyms = json[0]['meta']['syns'] if len(json) > 0 else []
+
+        flattened_synonyms = [item for sublist in synonyms for item in sublist];
+
+        return flattened_synonyms
 
 
 

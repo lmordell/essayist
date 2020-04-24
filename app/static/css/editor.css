@@ -1,5 +1,10 @@
 /* Styles for HTML editor */
-.tagged-word {
+.opposite-tone-word {
     background-color: #BB86FC;
+    cursor: pointer;
+}
+
+.match-tone-word {
+    background-color: lightgreen;
     cursor: pointer;
 }
