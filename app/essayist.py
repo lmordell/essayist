@@ -1,7 +1,7 @@
 import nltk
 import json
 
-import merriam_webster
+from merriam_webster import APP_KEY, BASE_URL
 from requests import get
 from flask_restful import Resource
 from flask import request,jsonify

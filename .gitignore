@@ -128,4 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-src/server/merriam_webster.py
+app/merriam_webster.py
+essayistenv

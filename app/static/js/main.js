@@ -127,7 +127,7 @@ function addTaggedWordListener(editor) {
     }
 }
 
-/** Append the clicked word's antonyms to the antonym container */
+/** Append the clicked word's antonyms / synonyms to the alternatives container */
 function updateAlternativesContainer(evt) {
     const word         = evt.target.innerText;
     const alternates   = wordAlternatemMap[word];
